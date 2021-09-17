@@ -8,4 +8,4 @@
 
 Below is an example of what the generated message card might look like.  Note that the code in this repo does not include the icon that is in the image but it's wasy enough to add your own.
 
-![Sample Image]https://github.com/hooverken/azureFunctionAppStuff/blob/main/azureServiceHealthAlertsToMessageCard/TestServiceHealthAlertCard.PNG?raw=true)
+![Sample Image](https://github.com/hooverken/azureFunctionAppStuff/blob/main/azureServiceHealthAlertsToMessageCard/TestServiceHealthAlertCard.PNG?raw=true)
