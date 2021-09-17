@@ -6,6 +6,6 @@
 
 **Important** This code assumes that the URI for the outgoing webhook is in an environment variable named **webhookuri**.  You can configure environment variables for function apps in the application settings for the app.
 
-Below is an example of what the generated message card might look like.  Note that the code in this repo does not include the icon that is in the image but it's wasy enough to add your own.
+Below is an example of what the generated message card might look like.  Note that the code in this repo does not include the icon that is in the image but it's easy enough to add your own.
 
 ![Sample Image](https://github.com/hooverken/azureFunctionAppStuff/blob/main/azureServiceHealthAlertsToMessageCard/TestServiceHealthAlertCard.PNG?raw=true)
