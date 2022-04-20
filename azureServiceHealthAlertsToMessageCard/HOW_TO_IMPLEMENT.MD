@@ -21,7 +21,9 @@ This is a Powershell-based approach, something like Postman can certainly be use
 
 - Copy the Webhook URL for the functionApp (not the Teams channel!) using the Azure portal's "Get Function URL" option.
 - Download the `SampleServiceHealthAlertWebhookPayload.json` file from this repo to your local system.
-- Use `Invoke-WebRequest` with the method POST and the URL of the functionApp, passing in the content of the `SampleServiceHealthAlertWebhookPayload.json` file as the body.  The functionApp should return a 200 response code and a message should appear in the Teams channel that looks similar to the sample image in this repo.  **Do not proceed until this works as it should**
+- Use `Invoke-WebRequest` with the method POST and the URL of the functionApp, passing in the content of the `SampleServiceHealthAlertWebhookPayload.json` file as the body.  The functionApp should return a 200 response code and a message should appear in the Teams channel that looks similar to the sample image in this repo.  
+
+**Do not proceed until this works as it should**
 
 ## Linking Azure Service Health Alerts to the Function App
 
