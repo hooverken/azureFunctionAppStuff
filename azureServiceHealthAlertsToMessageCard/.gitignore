@@ -8,7 +8,6 @@ host.json
 profile.ps1
 requirements.psd1
 
-
 # Azure Functions artifacts
 bin
 obj

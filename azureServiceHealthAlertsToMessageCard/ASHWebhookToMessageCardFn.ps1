@@ -1,4 +1,4 @@
-# ASHWebhookToMessageCard.ps1 (for Azure Powershell function app preview) 
+# ASHWebhookToMessageCard.ps1 (for Azure Powershell function app) 
 # by Ken Hoover <kendothooveratmicrosoftdotcom>
 # Original version August 2019
 # Reimplemented for Kentoso.us demo/lab environment April 2022
