@@ -1,6 +1,6 @@
 # How to implement this function app in your environment
 
-This is a basic checklist for implementing this in your environment.  This should result in a working setup, though you won't know for sure until a real service health alert gets thrown.
+This is a basic checklist for implementing this in your environment.  These steps should result in a working setup, though you won't know for sure until a real service health alert gets thrown.
 
 ## Prerequisites
 
