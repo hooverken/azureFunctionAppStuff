@@ -1,4 +1,5 @@
 # Added 20 apr 2022 to reduce git footprint
+.gitignore
 .vscode/
 .funcignore
 Icons/
