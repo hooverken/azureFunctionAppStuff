@@ -29,9 +29,9 @@ This is a Powershell-based approach, something like Postman can certainly be use
 
 - Create a [Azure Service Health Alert](https://docs.microsoft.com/en-us/azure/service-health/alerts-activity-log-service-notifications-portal) scoped to the subscription(s) you want to monitor.
 - For the **Action Group** associated with the service health alert, choose **Webhook** (NOT Secure Webhook) as the Action Type and configure as follows:
--- Name can be whatever you want it to be
--- URI should be set to the URI of the function App you created above
--- **Enable the common alert schema MUST be set to YES** or you will get nonsense in the Teams channel
+    - **Name** can be whatever you want it to be
+    - **URI** must be set to the URI of the function App you created above
+    - **Enable the common alert schema MUST be set to YES** or you will get nonsense in the Teams channel
 
 Now, whern a service health notification is generated which matches the criteria in the alert rule, you should get a message in the Teams channel.
 
