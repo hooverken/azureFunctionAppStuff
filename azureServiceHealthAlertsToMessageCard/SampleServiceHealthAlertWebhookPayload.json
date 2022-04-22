@@ -35,7 +35,7 @@
           "title": "Azure SQL DW Scheduled Maintenance Pending",
           "service": "SQL Data Warehouse",
           "region": "East US",
-          "communication": "This is the full text of the alert describing what's happening",
+          "communication": "(This will be the full text of the alert describing what's happening)",
           "incidentType": "Maintenance",
           "trackingId": "Tracking Id code",
           "impactStartTime": "2019-06-26T04:00:00Z",
