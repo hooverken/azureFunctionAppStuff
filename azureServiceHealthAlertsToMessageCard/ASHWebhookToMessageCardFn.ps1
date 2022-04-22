@@ -64,7 +64,7 @@ $red = "FF0000" ; $yellow = "FFFF00" ; $blue = "000000" ; $green = "008000"
 
 # These URLs point to PNG icons that will be displayed next to the title of the message card
 # The icons I'm using here were downloaded from https://icon-icons.com but there are tons of free ones out there.
-# The access level to the container should be set to "Blob (anaonymous read accecss for blobs only)"
+# The access level to the container should be set to "Blob (anonymous read access for blobs only)"
 
 $informationalIconUri = 'https://kentososervicehealt8624.blob.core.windows.net/activity-icons/information_info_1565.png'
 $actionRequiredIconUri = 'https://kentososervicehealt8624.blob.core.windows.net/activity-icons/uparrow_up_up_arrow_theaction_6341.png'
