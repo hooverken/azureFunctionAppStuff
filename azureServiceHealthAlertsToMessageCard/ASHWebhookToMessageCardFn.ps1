@@ -92,15 +92,31 @@ switch ($payload.data.alertcontext.properties.IncidentType) {
                 $MessageCard.Add("themeColor", $yellow)
             }
             "RCA" {
+                $MessageCard.Add("themeColor", $green)
+            }
+            Default {
                 $MessageCard.Add("themeColor", $blue)
             }
         }
     }
     "Maintenance" {
-        $MessageCard.Add("themeColor", $green)
         $SectionsHash.Add("activityImage", $maintenanceIconUri)
+        switch ($payload.data.alertcontext.properties.stage) {
+            "Active" {
+                $MessageCard.Add("themeColor", $yellow)
+            }
+            "Planned" {
+                $MessageCard.Add("themeColor", $yellow)
+            }
+            "Complete" {
+                $MessageCard.Add("themeColor", $green)
+            }
+            default {
+                $MessageCard.Add("themeColor", $blue)
+            }
+        }
     }
-    "Security" {      \
+    "Security" {      
         $SectionsHash.Add("activityImage", $securityIconUri)  
         switch ($payload.data.alertcontext.properties.stage) {
             "Active" {
@@ -110,6 +126,9 @@ switch ($payload.data.alertcontext.properties.IncidentType) {
                 $MessageCard.Add("themeColor", $yellow)
             }
             "RCA" {
+                $MessageCard.Add("themeColor", $green)
+            }
+            Default {
                 $MessageCard.Add("themeColor", $blue)
             }
         }
