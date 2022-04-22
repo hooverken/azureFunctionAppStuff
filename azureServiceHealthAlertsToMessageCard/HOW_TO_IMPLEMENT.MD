@@ -14,7 +14,7 @@ These instructions are fairly manual/low-level in nature.  If you are familiar w
 - In Teams, use the WebHook connector to [create an incoming webhook](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook?msclkid=36e57ebfc0e111ecabd007f617cbd546)  for the Teams channel that you want to post the alerts to.
 - Create a function app that uses PowerShell, a HTTP trigger and "Anonymous" authentication.
 - Create an [application setting](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings?msclkid=5c0fd7b1c0e211eca51c3f378885de31&tabs=portal) for the function app called **webhookuri** (case sensitive).  For the value, paste in the complete URI of the webhook for the Teams channel.  This setting is exposed to the function app's code as an environment variable.
-- **Replace the placeholder code for the function app with the contents of the .ps1 file from this GitHub repo.**  This is the code that gets executed when the function app is triggered.
+- **Replace the placeholder code for the function app with the contents of the ASHWebhookToMessageCardFn.ps1 file from this GitHub repo.**  This is the code that gets executed when the function app is triggered.
 
 #### A note about icons
 
