@@ -7,4 +7,4 @@ See the HOW_TO_IMPLEMENT.md file in this repo for how to get this working in you
 
 Below is an example (using dummy data) of what the generated message card might look like.  
 
-![Sample Image](https://github.com/hooverken/azureFunctionAppStuff/blob/main/azureServiceHealthAlertsToMessageCard/TestServiceHealthAlertCard.PNG?raw=true)
+![Sample Image](https://github.com/hooverken/azureFunctionAppStuff/blob/main/azureServiceHealthAlertsToMessageCard/FunctionAppMessageCardExample.png?raw=true)
