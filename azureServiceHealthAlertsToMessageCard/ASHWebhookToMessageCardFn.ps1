@@ -69,12 +69,12 @@ $red = "FF0000" ; $yellow = "FFFF00" ; $blue = "000000" ; $green = "008000"
 # The icons I'm using here were downloaded from https://icon-icons.com but there are tons of free ones out there.
 # The access level to the container should be set to "Blob (anonymous read access for blobs only)"
 
-$informationalIconUri = 'https://kentososervicehealt8624.blob.core.windows.net/activity-icons/information_info_1565.png'
-$actionRequiredIconUri = 'https://kentososervicehealt8624.blob.core.windows.net/activity-icons/uparrow_up_up_arrow_theaction_6341.png'
-$incidentIconUri = 'https://kentososervicehealt8624.blob.core.windows.net/activity-icons/sign-warning-icon_34355.png'
-$maintenanceIconUri = 'https://kentososervicehealt8624.blob.core.windows.net/activity-icons/maintenance256_24835.png'
-$securityIconUri = 'https://kentososervicehealt8624.blob.core.windows.net/activity-icons/padlock_78356.png'
-$defaultIconUri = 'https://kentososervicehealt8624.blob.core.windows.net/activity-icons/information_info_1565.png'
+$informationalIconUri = 'https://kenhoover.blob.core.windows.net/servicehealthalerticons/information.png'
+$actionRequiredIconUri = 'https://kenhoover.blob.core.windows.net/servicehealthalerticons/siren.png'
+$incidentIconUri = 'https://kenhoover.blob.core.windows.net/servicehealthalerticons/warning.png'
+$maintenanceIconUri = 'https://kenhoover.blob.core.windows.net/servicehealthalerticons/maintenance.png'
+$securityIconUri = 'https://kenhoover.blob.core.windows.net/servicehealthalerticons/shield.png'
+$defaultIconUri = 'https://kenhoover.blob.core.windows.net/servicehealthalerticons/accept.png'
 
 switch ($payload.data.alertcontext.properties.IncidentType) {
     "Informational" { 
