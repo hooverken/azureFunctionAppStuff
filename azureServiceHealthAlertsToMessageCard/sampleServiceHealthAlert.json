@@ -1,0 +1,62 @@
+{
+    "rawbody" : [
+        { 
+        "schemaId": "azureMonitorCommonAlertSchema",
+        "data": { 
+            "essentials": { 
+                "alertId": "/subscriptions/11111111-1111-1111-1111-111111111111/providers/Microsoft.AlertsManagement/alerts/1234abcd5678efgh1234abcd5678efgh1234abcd5678efgh1234abcd5678efgh", 
+                "alertRule": "test-ServiceHealthAlertRule", 
+                "severity": "Sev4", 
+                "signalType": "Activity Log", 
+                "monitorCondition": "Fired", 
+                "monitoringService": "ServiceHealth", 
+                "alertTargetIDs": [ "/subscriptions/11111111-1111-1111-1111-111111111111" ], 
+                "originAlertId": "12345678-1234-1234-1234-1234567890ab", 
+                "firedDateTime": "2024-02-02T14:37:27.199Z", 
+                "description": "Alert rule description", 
+                "essentialsVersion": "1.0", 
+                "alertContextVersion": "1.0" 
+            }, 
+            "alertContext": { 
+                "authorization": null, 
+                "channels": 1, 
+                "claims": null, 
+                "caller": null, 
+                "correlationId": "12345678-abcd-efgh-ijkl-abcd12345678", 
+                "eventSource": 2, 
+                "eventTimestamp": "2024-02-02T14:37:27.199Z", 
+                "httpRequest": null, 
+                "eventDataId": "12345678-1234-1234-1234-1234567890ab", 
+                "level": 3, 
+                "operationName": "Microsoft.ServiceHealth/incident/action", 
+                "operationId": "12345678-abcd-efgh-ijkl-abcd12345678", 
+                "properties": { 
+                    "title": "Test Action Group - Test Service Health Alert", 
+                    "service": "Azure Service Name", 
+                    "region": "Global", 
+                    "communication": "<p>This is a test from Service Health Alert</p>", 
+                    "incidentType": "Incident", 
+                    "trackingId": "TEST-TTT", 
+                    "impactStartTime": "2024-02-02T14:37:27.199Z", 
+                    "impactMitigationTime": "2024-02-02T14:37:27.199Z", 
+                    "impactedServices": [{"ImpactedRegions":[{"RegionName":"Global"}],"ServiceName":"Azure Service Name"}], 
+                    "impactedServicesTableRows": "<tr><td>This is a test from service health alert</<td>/<tr>", 
+                    "defaultLanguageTitle": "Test Action Group - Test Service Health Alert", 
+                    "defaultLanguageContent": "<p>This is a test from Service Health Alert</p>", 
+                    "stage": "Resolved", 
+                    "communicationId": "11223344556677", 
+                    "isHIR": "false", 
+                    "IsSynthetic": "True", 
+                    "impactType": "SubscriptionList", 
+                    "version": "0.1.1" 
+                }, 
+                "status": "Resolved", 
+                "subStatus": null, 
+                "submissionTimestamp": 
+                "2024-02-02T14:37:27.199Z", 
+                "ResourceType": null 
+                } 
+            } 
+        }
+    ]
+}

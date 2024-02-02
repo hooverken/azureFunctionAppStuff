@@ -1,0 +1,46 @@
+{
+    "rawbody" : [
+        { 
+            "schemaId": "azureMonitorCommonAlertSchema", 
+            "data": { 
+                "essentials": { 
+                    "alertId": "/subscriptions/11111111-1111-1111-1111-111111111111/providers/Microsoft.AlertsManagement/alerts/12345678-1234-1234-1234-1234567890ab", 
+                    "alertRule": "test-ResourceHealthAlertRule", 
+                    "severity": "Sev4", 
+                    "signalType": "Activity Log", 
+                    "monitorCondition": "Fired", 
+                    "monitoringService": "Resource Health", 
+                    "alertTargetIDs": [ "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/test-RG/providers/microsoft.compute/virtualmachines/test-VM" ],
+                    "configurationItems": [ "test-VM" ], 
+                    "originAlertId": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb_123456789012345678901234567890ab", 
+                    "firedDateTime": "2024-02-02T14:00:25.336Z", 
+                    "description": "Alert rule description", 
+                    "essentialsVersion": "1.0", 
+                    "alertContextVersion": "1.0" 
+                }, 
+                "alertContext": 
+                { 
+                    "channels": "Admin, Operation", 
+                    "correlationId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", 
+                    "eventSource": "ResourceHealth", 
+                    "eventTimestamp": "2024-02-02T14:00:25.336Z", 
+                    "eventDataId": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", 
+                    "level": "Informational", 
+                    "operationName": "Microsoft.Resourcehealth/healthevent/Activated/action", 
+                    "operationId": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", 
+                    "properties": { 
+                        "title": "Rebooted by user", 
+                        "details": null, 
+                        "currentHealthStatus": "Unavailable", 
+                        "previousHealthStatus": "Available", 
+                        "type": "Downtime", 
+                        "cause": "UserInitiated" 
+                    }, 
+                    "status": "Active", 
+                    "submissionTimestamp": "2024-02-02T14:00:25.336Z", 
+                    "Activity Log Event Description": null 
+                } 
+            } 
+        }
+    ]
+}
