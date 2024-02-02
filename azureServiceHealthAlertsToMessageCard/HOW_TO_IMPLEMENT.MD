@@ -14,8 +14,8 @@ These instructions are fairly manual/low-level in nature.  If you are familiar w
 - In Teams, use the WebHook connector to [create an incoming webhook](https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook?msclkid=36e57ebfc0e111ecabd007f617cbd546)  for the channel that you want to post the alerts to.
 - Create a new function app that uses PowerShell, a HTTP trigger and "Anonymous" authentication.
 - Create an [application setting](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings?msclkid=5c0fd7b1c0e211eca51c3f378885de31&tabs=portal) for the function app (under "Configuration") called `webhookuri`.  These settings are case sensitive.  For the value, paste in the **complete URI of the webhook for the Teams channel**.  This setting is exposed to the function app's code as an environment variable.
-- Create ana second application setting called `tenantId` which contains the tenant ID for your organization's Entra ID tenant.  *This is used to create the direct link to a resource for service health alerts.
-- **Replace the placeholder code for the function app with the contents of the `functionAppCode.ps1` file from this GitHub repo.**  The easiest way to do this is to go to click on "Code + Test", select all the text in the code pane, delete it and paste in the cost from the `functionAppCode.ps1` file.  This is the code that gets executed when the function app is triggered.
+- Create a second application setting called `tenantId` which contains the tenant ID for your organization's Entra ID tenant.  *This is used to create the direct link to a resource for service health alerts.
+- **Replace the placeholder code for the function app with the contents of the `functionAppCode.ps1` file from this GitHub repo.**  The easiest way to do this is to go to click on "Code + Test", select all the text in the code pane, delete it and paste in the code from the `functionAppCode.ps1` file.  This is the code that gets executed when the function app is triggered.
 
 #### A note about icons
 
