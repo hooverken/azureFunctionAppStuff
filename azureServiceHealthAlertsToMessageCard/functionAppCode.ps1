@@ -39,6 +39,20 @@ Function Choose-EmphasisColor {
     switch ($level) {
         "Informational" { 
             $color = "accent"
+            switch ($stage) {
+                "Active" {
+                    $color = "attention"
+                }
+                "Resolved" {
+                    $color = "good"
+                }
+                "RCA" {
+                    $color = "good"
+                }
+                Default {
+                    $color = "accent"
+                }
+            }
         }
         "ActionRequired" {
             $color = "attention"
@@ -142,8 +156,6 @@ function chooseIconForAlertCard {
 
 # Some setup stuff
 
-# $RequestObject = $Request | ConvertFrom-Json  # default depth is 1024 for ConvertFrom-Json
-
 # Get the payload from the incoming webhook as an object
 $payload = $Request.rawbody | ConvertFrom-Json
 
@@ -155,7 +167,7 @@ $isServiceHealthAlert = ($payload.data.essentials.monitoringService -eq "Service
 # Get the subscription ID that this alert is for from the payload
 
 if ($payload.data.essentials.alertTargetIDs.count -gt 1) {
-    # If there is more than one alert target then we need to parse the alertTargetIDs array to get the subscription ID
+    # If there is more than one alert target then we will look at the first element to get the subscription ID
     # This is the case for resource health alerts
     $subscriptionId = $payload.data.essentials.alertTargetIDs[0].split('/')[4] 
 } else {
@@ -165,20 +177,20 @@ if ($payload.data.essentials.alertTargetIDs.count -gt 1) {
 }
 
 # Write something to the Azure Functions log stream to show we are alive
-# $isServiceHealthAlert ? (Write-Output "Processing Service Health Alert for subscription $subscriptionId") : (Write-Output "Processing Resource Health Alert for subscription $subscriptionId")
+$isServiceHealthAlert ? (Write-Output "Processing Service Health Alert for subscription $subscriptionId") : (Write-Output "Processing Resource Health Alert for subscription $subscriptionId")
 
 # ------------------  Build the the header/title section  ------------------
 
-# The title of the card - basically a one-line summary of what's happening
-
-# Ex:  "Active/Investigating:  Azure Monitor - East US - Service Degradation"
+# The title of the card - a one-line summary of what's happening
 if ($isServiceHealthAlert) {
+    # Ex:  "Active/Investigating:  Azure Monitor - East US - Service Degradation"
     $titleText =  $payload.data.alertContext.properties.IncidentType + "/" + $payload.data.alertContext.properties.stage + ": " + $payload.data.alertContext.properties.title
 } else {
+    # ex: "TESTVM000: Reboot initiated from inside the machine"
     $titleText =  $payload.data.essentials.configurationItems[0] + ": " + $payload.data.alertContext.properties.title
 }
 
-# \Service health and resource health use different schemas so we need to get the stage and level from different places
+# Service health and resource health use different schemas so we need to get the stage and level from different places
 $eventStage = ($isServiceHealthAlert ? $payload.data.alertContext.properties.stage : $payload.data.alertContext.properties.cause)
 $eventLevel = ($isServiceHealthAlert ? $payload.data.alertContext.level.IncidentType : $payload.data.alertContext.level)
 
@@ -190,14 +202,9 @@ $title | Add-Member -MemberType NoteProperty -Name 'weight' -Value 'bolder'
 $title | Add-Member -MemberType NoteProperty -Name 'style' -Value 'heading'
 $title | Add-Member -MemberType NoteProperty -Name 'size' -Value 'large'
 $title | Add-Member -MemberType NoteProperty -Name 'wrap' -Value $true
-$title | Add-Member -MemberType NoteProperty -Name 'color' -Value (Choose-EmphasisColor -stage $stage -level $level)
+$title | Add-Member -MemberType NoteProperty -Name 'color' -Value (Choose-EmphasisColor -stage $eventStage -level $eventLevel)
 
 # Add the details about what's affected for the header section
-
-
-# If's a service health alert then we post the service and region impacted.
-# If this is a resource health alert then we post the resource name and RG name.  If there is more than one resource
-#    then they will be listed separated by commas like "VM1, VM2, VM3"
 
 $details1Text = ($isServiceHealthAlert ? $payload.data.alertContext.properties.service : $payload.data.alertContext.properties.cause)
 
@@ -219,7 +226,7 @@ if ($isServiceHealthAlert) {
     $details2Text = "Region: " + $payload.data.alertContext.properties.region
 } else {
     # if this is a resource health alert I'm more interested in when it happened.
-    $details2Text = "Fired: " + $payload.data.essentials.firedDateTime
+    $details2Text = "Detected: " + $payload.data.essentials.firedDateTime
 }
 
 $details2 = New-Object -TypeName psobject
@@ -285,10 +292,10 @@ $detailsSection | Add-Member -MemberType NoteProperty -Name 'wrap' -Value $true 
 $factsList = [System.Collections.ArrayList]::new()
 
 if ($isServiceHealthAlert) {
-    # Skip poting information from the facts list that is redundant or messy
+    # Skip posting information from the facts list that is redundant or messy
     $propertiesToSkip = @("title", "impactedServices","communication","DefaultLanguageTitle","defaultLanguageContent","impactedServicesTableRows")
 
-    $factsList = [System.Collections.ArrayList]::new()
+    # $factsList = [System.Collections.ArrayList]::new()
     # Copy the properties of the payload (a list of name-value pairs) into the card's "facts" section
     $facts = $payload.data.alertcontext.properties
     if($null -ne $facts){
@@ -300,18 +307,20 @@ if ($isServiceHealthAlert) {
             }
         }
     }
-} else { # this is a resource health alert so we build the key information manually
+} else { # this is a resource health alert so we put together some useful information manually instead of just doing a raw dump
     if ($payload.data.essentials.configurationItems.count -gt 1) {
         $resourceGroupName = $payload.data.essentials.alertTargetIDs[0].split('/')[4]
     } else {
         $resourceGroupName = $payload.data.essentials.alertTargetIDs.split('/')[4]
     }
-    $factsList += [PSCustomObject]@{title = "Resource Group"; value = $resourceGroupName}
-    $factsList += [PSCustomObject]@{title = "Timestamp "; value = $payload.data.alertContext.eventTimestamp}
-    $factsList += [PSCustomObject]@{title = "Level"; value = $payload.data.alertContext.level}
-    $factsList += [PSCustomObject]@{title = "Status"; value = $payload.data.alertContext.status}
-    $factsList += [PSCustomObject]@{title = "OperationId"; value = $payload.data.alertContext.operationId}
-    $factsList += [PSCustomObject]@{title = "CorrelationID"; value = $payload.data.alertContext.correlationId}
+    $factsList += [PSCustomObject]@{title = "Resource Group";   value = $resourceGroupName}
+    $factsList += [PSCustomObject]@{title = "Timestamp ";       value = $payload.data.alertContext.eventTimestamp}
+    $factsList += [PSCustomObject]@{title = "Level";            value = $payload.data.alertContext.level}
+    $factsList += [PSCustomObject]@{title = "Status";           value = $payload.data.alertContext.status}
+    $factsList += [PSCustomObject]@{title = "Type";             value = $payload.data.alertContext.properties.type}
+    $factsList += [PSCustomObject]@{title = "Cause";            value = $payload.data.alertContext.properties.cause}
+    $factsList += [PSCustomObject]@{title = "OperationId";      value = $payload.data.alertContext.operationId}
+    $factsList += [PSCustomObject]@{title = "CorrelationID";    value = $payload.data.alertContext.correlationId}
 }
 
 $factsSection = New-Object -type psobject
