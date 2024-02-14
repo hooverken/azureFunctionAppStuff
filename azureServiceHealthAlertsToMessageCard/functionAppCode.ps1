@@ -31,7 +31,7 @@ param ( $Request ) # This is the incoming webhook payload
 
 # Helper Functions
 
-Function Choose-EmphasisColor {
+Function Select-EmphasisColor {
     param (
         [string]$stage,
         [string]$level
@@ -55,6 +55,9 @@ Function Choose-EmphasisColor {
             }
         }
         "ActionRequired" {
+            $color = "attention"
+        }
+        "Downtime" {
             $color = "attention"
         }
         "Incident" {  # apply different themes based on the alert stage.
@@ -138,7 +141,7 @@ function chooseIconForAlertCard {
             $iconUrl = $incidentIconUri
         }
         "Sev3" {
-            $iconUrl = $informationalIconUri
+            $iconUrl = $incidentIconUri
         }
         "Sev4" {  
             $iconUrl = $informationalIconUri
@@ -202,10 +205,9 @@ $title | Add-Member -MemberType NoteProperty -Name 'weight' -Value 'bolder'
 $title | Add-Member -MemberType NoteProperty -Name 'style' -Value 'heading'
 $title | Add-Member -MemberType NoteProperty -Name 'size' -Value 'large'
 $title | Add-Member -MemberType NoteProperty -Name 'wrap' -Value $true
-$title | Add-Member -MemberType NoteProperty -Name 'color' -Value (Choose-EmphasisColor -stage $eventStage -level $eventLevel)
+$title | Add-Member -MemberType NoteProperty -Name 'color' -Value (Select-EmphasisColor -stage $eventStage -level $eventLevel)
 
 # Add the details about what's affected for the header section
-
 $details1Text = ($isServiceHealthAlert ? $payload.data.alertContext.properties.service : $payload.data.alertContext.properties.cause)
 
 # Details Section #1
@@ -277,8 +279,8 @@ $headerSection | Add-Member -MemberType NoteProperty -Name 'columns' -Value @($i
 
 $descriptionText = ($isServiceHealthAlert ? $payload.data.alertContext.properties.defaultLanguageContent : $payload.data.alertContext.properties.details)
 
-# If the descriptionText comes back as null just use the alert title.
-if ($descriptionText -eq $null) {
+# If the descriptionText comes back as null just use the alert title as the description.
+if ($null -eq $descriptionText) {
     $descriptionText = $titleText
 }
 
@@ -295,7 +297,6 @@ if ($isServiceHealthAlert) {
     # Skip posting information from the facts list that is redundant or messy
     $propertiesToSkip = @("title", "impactedServices","communication","DefaultLanguageTitle","defaultLanguageContent","impactedServicesTableRows")
 
-    # $factsList = [System.Collections.ArrayList]::new()
     # Copy the properties of the payload (a list of name-value pairs) into the card's "facts" section
     $facts = $payload.data.alertcontext.properties
     if($null -ne $facts){
@@ -335,6 +336,7 @@ $rawPayloadSection = New-Object -TypeName psobject
 $rawPayloadSection | Add-Member -MemberType NoteProperty -Name 'type' -Value 'TextBlock'
 $rawPayloadSection | Add-Member -MemberType NoteProperty -Name 'wrap' -Value $true
 $rawPayloadSection | Add-Member -MemberType NoteProperty -Name 'separator' -Value $true
+$rawPayloadSection | Add-Member -MemberType NoteProperty -Name 'isVisible' -Value $true
 $rawPayloadSection | Add-Member -MemberType NoteProperty -Name 'text' -Value ($payload | ConvertTo-Json -Depth 25)
 
 # ------------------  Build the ActionSet (buttons) ------------------
@@ -369,7 +371,7 @@ $content | Add-Member -MemberType NoteProperty -Name '$schema' -Value 'http://ad
 $content | Add-Member -MemberType NoteProperty -Name 'type' -Value 'AdaptiveCard'
 $content | Add-Member -MemberType NoteProperty -Name 'version' -Value '1.5'
 $content | Add-Member -MemberType NoteProperty -Name 'body' -Value @($headerSection, $detailsSection, $factsSection, $rawPayloadSection)
-# $content | Add-Member -MemberType NoteProperty -Name 'actions' -Value @($goToAlertButton)
+$content | Add-Member -MemberType NoteProperty -Name 'actions' -Value @($goToAlertButton)
 
 # Final Assembly - wrap it up
 $attachments = New-Object -TypeName psobject
